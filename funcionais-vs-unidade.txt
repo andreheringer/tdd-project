@@ -1,0 +1,2 @@
+1 - Teste de unidade testa apenas um método enquanto o funcional um escopo maior.
+2 - Granularidade
