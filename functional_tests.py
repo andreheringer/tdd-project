@@ -3,15 +3,19 @@ import unittest
 
 class NewVisitorTest(unittest.TestCase):
 
+    def setUp(self):  
+         self.browser = webdriver.Firefox(executable_path="geckodriver-v0.26.0-linux64/geckodriver")
+
+    def tearDown(self):  
+        self.browser.quit()
+
     def test_can_start_a_list_and_retrieve_it_later(self): 
 
-        browser = webdriver.Firefox(executable_path="geckodriver-v0.26.0-linux64/geckodriver")
-
         # Maria decidiu utilizar o novo app TODO. Ela entra em sua página principal:
-        browser.get('http://localhost:8000')
+        self.browser.get('http://localhost:8000')
 
         # Ela nota que o título da página menciona TODO
-        assert 'To-Do' in browser.title
+        self.assertIn('To-Do', self.browser.title)
 
         # Ela é convidada a entrar com um item TODO imediatamente
 
@@ -31,8 +35,6 @@ class NewVisitorTest(unittest.TestCase):
         # Ela visita a URL: a sua lista TODO ainda está armazenada
 
         # Satisfeita, ela vai dormir
-
-        browser.quit()
 
 if __name__ == '__main__':
     unittest.main()
