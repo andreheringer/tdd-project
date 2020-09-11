@@ -8,8 +8,8 @@ MAX_WAIT = 5
 
 class NewVisitorTest(LiveServerTestCase):
 
-    def setUp(self):  
-         self.browser = webdriver.Firefox(executable_path="/home/andre/Projects/tdd-project/geckodriver")
+    def setUp(self):
+         self.browser = webdriver.Firefox()
 
     def tearDown(self):  
         self.browser.quit()

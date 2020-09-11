@@ -40,6 +40,12 @@ class ListViewTest(TestCase):
         self.assertContains(response, 'itemey 2')
         self.assertNotContains(response, 'other list item 1')
         self.assertNotContains(response, 'other list item 2')
+    
+    def test_passes_correct_list_to_template(self):
+        other_list = List.objects.create()
+        correct_list = List.objects.create()
+        response = self.client.get(f'/lists/{correct_list.id}/')
+        self.assertEqual(response.context['list'], correct_list)
 
 class ListAndItemModelsTest(TestCase):
 
@@ -72,32 +78,13 @@ class ListAndItemModelsTest(TestCase):
 
 class HomePageTest(TestCase):
 
-    def test_uses_home_template(self):
-        response = self.client.get('/')
-        self.assertTemplateUsed(response, 'home.html')
-
-    def test_home_page_returns_correct_html(self):
-        response = self.client.get('/')  
-
-        html = response.content.decode('utf8')  
-        self.assertTrue(html.startswith('<html>'))
-        self.assertIn('<title>To-Do lists</title>', html)
-        self.assertTrue(html.strip().endswith('</html>'))
-
-        self.assertTemplateUsed(response, 'home.html')
-    
-    def test_only_saves_items_when_necessary(self):
-        self.client.get('/')
-        self.assertEqual(Item.objects.count(), 0)
-    
-    def test_displays_all_list_items(self):
-        Item.objects.create(text='itemey 1')
-        Item.objects.create(text='itemey 2')
-
-        response = self.client.get('/')
-
-        self.assertIn('itemey 1', response.content.decode())
-        self.assertIn('itemey 2', response.content.decode())
+	def test_uses_home_template(self):
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'home.html')
+		
+	def test_only_saves_items_when_necessary(self):
+		self.client.get('/')
+		self.assertEqual(Item.objects.count(), 0)
 
 class NewItemTest(TestCase):
 
