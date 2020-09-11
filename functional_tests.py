@@ -14,16 +14,29 @@ class NewVisitorTest(unittest.TestCase):
         # Maria decidiu utilizar o novo app TODO. Ela entra em sua página principal:
         self.browser.get('http://127.0.0.1:8000')
 
-        # Ela nota que o título da página menciona TODO
+          # Ela nota que o título da página menciona TODO
         self.assertIn('To-Do', self.browser.title)
+        header_text = self.browser.find_element_by_tag_name('h1').text  
+        self.assertIn('To-Do', header_text)
 
         # Ela é convidada a entrar com um item TODO imediatamente
+        inputbox = self.browser.find_element_by_id('id_new_item')  
+        self.assertEqual(inputbox.get_attribute('placeholder'), 'Enter a to-do item')
 
         # Ela digita "Estudar testes funcionais" em uma caixa de texto
+        inputbox.send_keys('Estudar testes funcionais')
 
         # Quando ela aperta enter, a página atualiza, e mostra a lista
         # "1: Estudar testes funcionais" como um item da lista TODO
-
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
+        
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')  
+        self.assertTrue(
+            any(row.text == '1: Estudar testes funcionais' for row in rows)
+        )
+        
         # Ainda existe uma caixa de texto convidando para adicionar outro item
         # Ela digita: "Estudar testes de unidade"
 
