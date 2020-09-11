@@ -4,7 +4,7 @@ import unittest
 class NewVisitorTest(unittest.TestCase):
 
     def setUp(self):  
-         self.browser = webdriver.Firefox(executable_path="geckodriver-v0.26.0-linux64/geckodriver")
+         self.browser = webdriver.Firefox(executable_path="/home/andre/Projects/tdd-project/geckodriver")
 
     def tearDown(self):  
         self.browser.quit()
@@ -12,7 +12,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrieve_it_later(self): 
 
         # Maria decidiu utilizar o novo app TODO. Ela entra em sua página principal:
-        self.browser.get('http://localhost:8000')
+        self.browser.get('http://127.0.0.1:8000')
 
         # Ela nota que o título da página menciona TODO
         self.assertIn('To-Do', self.browser.title)
