@@ -4,3 +4,4 @@ virtualenv
 __pycache__
 *.pyc
 geckodriver-v0.26.0-linux64/
+.env/
